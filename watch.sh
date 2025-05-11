@@ -12,6 +12,6 @@ inotifywait -r -m -e modify . |
     then
         name="${file_name%%.*}"
         # We call the make target in order to build it
-        make "$name.pdf"
+        make "$name.pdf" TEXFLAGS=--halt-on-error
     fi
    done

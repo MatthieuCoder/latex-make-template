@@ -1,5 +1,8 @@
 TEX := $(wildcard *.tex)
 NAMES := $(TEX:.tex=.pdf)
+TEX2PDF := xelatex
+TEXFLAGS :=
+TEMPSUFFIX := tex
 
 # Target that matches all possible generated PDFs
 all: $(NAMES)
@@ -7,17 +10,17 @@ $(NAMES): $(%:.pdf=.tex)
 
 # Rule that builds the tex file in a temp directory and copies it
 %.pdf: %.tex
-	$(eval TMP := $(shell mktemp -d --suffix=-sts-build))
+	$(eval TMP := $(shell mktemp -d --suffix=$(TEMPSUFFIX)))
 	@cp -r * $(TMP)/
 	cd $(TMP)/; \
-		xelatex $<;
+		$(TEX2PDF) $(TEXFLAGS) $<;
 	@cp $(TMP)/$@ $@
-	@rm -rf $(TMP)
+	@$(RM) -r $(TMP)
 
 # Rule that cleans all previous content
 clean:
-	@rm *.pdf
-	@rm -r /tmp/*-sts-build
+	@$(RM) *.pdf
+	@$(RM) -r /tmp/*$(TEMPSUFFIX)
 
 watch: watch.sh
 	./watch.sh
