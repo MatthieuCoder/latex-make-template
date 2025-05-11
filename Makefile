@@ -18,4 +18,8 @@ $(NAMES): $(%:.pdf=.tex)
 clean:
 	@rm *.pdf
 	@rm -r /tmp/*-sts-build
-.PHONY: all clean
+
+watch: watch.sh
+	./watch.sh
+
+.PHONY: all clean watch
