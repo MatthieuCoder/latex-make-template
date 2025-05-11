@@ -10,12 +10,12 @@ $(NAMES): $(%:.pdf=.tex)
 
 # Rule that builds the tex file in a temp directory and copies it
 %.pdf: %.tex
-	$(eval TMP := $(shell mktemp -d --suffix=$(TEMPSUFFIX)))
-	@cp -r * $(TMP)/
-	cd $(TMP)/; \
+	$(eval TEMP := $(shell mktemp -d --suffix=$(TEMPSUFFIX)))
+	@cp -r * $(TEMP)/
+	cd $(TEMP)/; \
 		$(TEX2PDF) $(TEXFLAGS) $<;
-	@cp $(TMP)/$@ $@
-	@$(RM) -r $(TMP)
+	@cp $(TEMP)/$@ $@
+	@$(RM) -r $(TEMP)
 
 # Rule that cleans all previous content
 clean:
